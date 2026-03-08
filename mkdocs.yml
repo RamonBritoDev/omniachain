@@ -1,0 +1,113 @@
+site_name: OmniaChain Wiki
+site_description: "Framework Python para agentes de IA — async-first, multi-modal, MCP nativo, STT, TTS e geração de imagens"
+site_url: https://omniachain.dev
+
+repo_url: https://github.com/omniachain/omniachain
+repo_name: omniachain/omniachain
+
+theme:
+  name: material
+  language: pt-BR
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
+    - scheme: default
+      primary: deep purple
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Modo escuro
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+  logo: assets/logo.png
+  favicon: assets/logo.png
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.tabs
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+extra_css:
+  - assets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/omniachain/omniachain
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/omniachain/
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Instalação: getting-started/installation.md
+      - Primeiro Agente: getting-started/first-agent.md
+      - Configuração: getting-started/configuration.md
+  - Agentes:
+      - Visão Geral: agents/overview.md
+      - ReAct Agent: agents/react.md
+      - Multimodal Agent: agents/multimodal.md
+      - Planner Agent: agents/planner.md
+      - Supervisor Agent: agents/supervisor.md
+      - Voice Agent: agents/voice.md
+      - Artist Agent: agents/artist.md
+  - Tools:
+      - Criar Tools: tools/creating-tools.md
+      - Tools Nativas: tools/builtin.md
+  - Mídia:
+      - Visão Geral: media/overview.md
+      - Speech-to-Text: media/stt.md
+      - Text-to-Speech: media/tts.md
+      - Geração de Imagens: media/image-gen.md
+  - Memória:
+      - Visão Geral: memory/overview.md
+      - Memória Vetorial: memory/vector.md
+  - MCP:
+      - Visão Geral: mcp/overview.md
+      - MCP Server: mcp/server.md
+      - MCP Client: mcp/client.md
+  - Segurança:
+      - PGP & Permissões: security/pgp.md
+  - Pipeline:
+      - Pipelines: pipeline/overview.md
+  - Providers:
+      - Visão Geral: providers/overview.md
+  - Observability:
+      - Custos & Tracing: observability/overview.md

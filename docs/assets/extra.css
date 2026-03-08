@@ -1,0 +1,23 @@
+/* Logo no header */
+.md-header__button.md-logo img {
+    height: 32px;
+    width: 32px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* Logo na sidebar */
+.md-nav__button.md-logo img {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* Home page logo */
+.hero-logo {
+    display: block;
+    margin: 0 auto 1rem;
+    width: 160px;
+    border-radius: 12px;
+}
