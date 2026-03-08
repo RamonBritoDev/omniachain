@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/RamonBritoDev/omniachain/main/docs-site/public/favicon.ico" alt="OmniaChain" width="120" />
   <h1>✨ OmniaChain</h1>
   
   <p><b>Python framework for AI agents — async-first, multi-modal, native MCP.</b></p>
