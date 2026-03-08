@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "omniachain"
 version = "0.1.0"
-description = "The async-first, multi-modal AI framework. Better than LangChain."
+description = "Intelligent async-first, multi-modal Python framework for AI agent orchestration."
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
@@ -53,9 +53,9 @@ audio = ["openai-whisper>=20231117"]
 all = ["omniachain[vector,browser,audio]"]
 
 [project.urls]
-Homepage = "https://github.com/omniachain/omniachain"
-Documentation = "https://omniachain.dev"
-Repository = "https://github.com/omniachain/omniachain"
+Homepage = "https://github.com/RamonBritoDev/omniachain"
+Documentation = "https://github.com/RamonBritoDev/omniachain.wiki.git"
+Repository = "https://github.com/RamonBritoDev/omniachain"
 
 [tool.hatch.build.targets.wheel]
 packages = ["omniachain"]

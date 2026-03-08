@@ -1,219 +1,166 @@
-# 🔗 OmniaChain
+<div align="center">
+  <img src="https://raw.githubusercontent.com/RamonBritoDev/omniachain/main/docs-site/public/favicon.ico" alt="OmniaChain" width="120" />
+  <h1>✨ OmniaChain</h1>
+  
+  <p><b>Python framework for AI agents — async-first, multi-modal, native MCP.</b></p>
 
-**Framework Python para agentes de IA — async-first, multi-modal, MCP nativo.**
+  <p>
+    <a href="https://python.org"><img src="https://img.shields.io/badge/python-3.11+-8b5cf6?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.11+" /></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-a78bfa?style=for-the-badge" alt="License: MIT" /></a>
+    <a href="https://github.com/RamonBritoDev/omniachain"><img src="https://img.shields.io/badge/Version-1.0.0-c4b5fd?style=for-the-badge" alt="Version 1.0.0" /></a>
+  </p>
 
-> Mais poderoso que LangChain. Mais simples que CrewAI. Seguro com PGP.
+  <i>Intelligent orchestration, native integration, and built-in security for your agents.</i><br/><br/>
+</div>
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://python.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+<hr/>
+
+## 🔮 Why OmniaChain?
+
+Everything you need to build next-generation artificial intelligence in one place. OmniaChain was designed focusing on **speed, extensibility, and modularity** for truly capable agents.
+
+### ✨ Key Features
+
+- ⚡ **Automatic Async-first**: Asynchronous parallel pipeline (`asyncio`) to ensure maximum performance when executing tools and LLM calls. Zero blocking.
+- 🎨 **Multimodal Agents**: Computer vision, audio inputs (STT), video transcription, and synthetic voice generation (TTS) + image generation. Everything is embedded and processed dynamically: _Text, PDF, image, audio, video, CSV, URL, code_.
+- 🫂 **Model Context Protocol (MCP)**: **Native** integration with Anthropic's MCP servers, allowing you to instantly inject dozens of standardized tools via `stdio` or `http`.
+- 🧠 **Multiple Providers**: Work with `Anthropic`, `OpenAI`, `Groq`, `Ollama`, and `Google Gemini` simultaneously, or apply advanced *Fallback* rules.
+- 🛡️ **Military-grade PGP Security**: Keypairs, contextual permissions, guard middlewares with GPG signature support and auditing for restricted tools (`code_exec`, etc).
+- 🧩 **Modular Multi-Agent**: Configure complex architectures with ReAct, Multimodal, Planner, and Supervisor agents integrated with advanced vector memory (pgvector).
 
 ---
 
-## ✨ Recursos
+## 🚀 Quick Installation
 
-| Recurso | Descrição |
-|---------|-----------|
-| 🚀 **Async-first** | `asyncio` em tudo — zero bloqueio |
-| 🎨 **Multi-modal** | Texto, PDF, imagem, áudio, vídeo, CSV, URL, código |
-| 🤖 **5 Providers** | Anthropic, OpenAI, Groq, Ollama, Google Gemini |
-| 🛠️ **Tools nativas** | Web search, calculator, HTTP, file, code exec, browser |
-| 🧠 **4 tipos de memória** | Buffer, Summary, Vector (pgvector), Persistent (SQLite) |
-| 🔌 **MCP nativo** | Server + Client + Memory Server via MCP Protocol |
-| 🔐 **Segurança PGP** | Keypair, permissions, guard, middleware com auditoria |
-| 🎭 **4 tipos de agente** | ReAct, Multimodal, Planner, Supervisor |
-| 📊 **Observability** | Logger, Tracer, Cost Tracker, Dashboard |
-| 🔄 **Pipelines** | Sequencial, Paralelo, Condicional, Router |
-| 🎯 **Orquestração** | Session multi-agente, Pool de providers, Fallback |
-
----
-
-## 🚀 Instalação
+OmniaChain is modular. Install only what you need or embark on the full ship.
 
 ```bash
+# Basic framework installation
 pip install omniachain
 
-# Com todos os extras
+# Complete Installation (Recommended)
 pip install omniachain[all]
 
-# Extras específicos
-pip install omniachain[vector]    # pgvector
-pip install omniachain[browser]   # Playwright
-pip install omniachain[audio]     # Whisper
+# Specific extras to enable powerful dependencies
+pip install omniachain[vector]    # Advanced Memory with PostgreSQL pgvector
+pip install omniachain[browser]   # Automation and web scraping with Playwright
+pip install omniachain[audio]     # Local transcription (STT) using the Whisper engine
 ```
 
 ---
 
-## 📖 Uso Rápido
+## ⚡ Quick Start (3 Lines!)
 
-### Agente básico (3 linhas!)
+**You don't need huge boilerplates. Summon an agent with tools in 3 lines of code:**
 
 ```python
-from omniachain import Agent, Anthropic, calculator, web_search
+import asyncio
+from omniachain import Agent, OpenAI, calculator, web_search
 
-agent = Agent(provider=Anthropic(), tools=[calculator, web_search])
-result = await agent.run("Quanto é 15 * 32 + raiz de 144?")
-print(result.content)  # "O resultado é 492"
+async def main():
+    agent = Agent(provider=OpenAI("gpt-4o-mini"), tools=[calculator, web_search])
+    
+    # The agent decides entirely on its own when to invoke web tools or calculations!
+    result = await agent.run("What is the square root of 144 times the distance to the moon?")
+    
+    print(result.content)
+
+asyncio.run(main())
 ```
 
-### Multi-modal
+<hr/>
+
+### 👁️ Advanced Multi-modal Agent
+Connect raw and mixed data sources directly to prompts:
 
 ```python
-from omniachain import MultimodalAgent, OpenAI
+from omniachain import MultimodalAgent, Anthropic
 
-agent = MultimodalAgent(provider=OpenAI("gpt-4o"))
+agent = MultimodalAgent(provider=Anthropic("claude-3-5-sonnet-20241022"))
 result = await agent.run(
-    "Analise estes dados",
-    inputs=["relatorio.pdf", "grafico.png", "dados.csv"]
+    "Extract key metrics, transcribe the recording, and compare against the visual projection.",
+    inputs=["sales_report.pdf", "audio_meeting.mp3", "q4_projection.png"]
 )
 ```
 
-### Multi-agente com Supervisor
+<hr/>
 
-```python
-from omniachain import Anthropic, Groq, ReActAgent, SupervisorAgent, web_search, calculator
-
-researcher = ReActAgent(provider=Anthropic(), tools=[web_search], name="researcher")
-analyst = ReActAgent(provider=Groq(), tools=[calculator], name="analyst")
-
-supervisor = SupervisorAgent(
-    provider=Anthropic(),
-    sub_agents=[researcher, analyst],
-)
-result = await supervisor.run("Pesquise IA e analise os dados")
-```
-
-### MCP Server
+### 🔌 MCP Server (Direct Integration)
+Instantly transform OmniaChain tools into a Model Context Protocol server accessible via Claude Desktop:
 
 ```python
 from omniachain import MCPServer
 
-server = MCPServer("meu-servidor")
+server = MCPServer("hr-database")
 
 @server.tool
-async def consultar(query: str) -> str:
-    """Consulta dados."""
-    return f"Resultado: {query}"
+async def check_vacation(role: str) -> str:
+    """Checks vacation rules based on role."""
+    return f"Policies and deadlines for the role: {role}"
 
+# Start MCP communication transport
 await server.run(transport="stdio")
 ```
 
-### Segurança PGP
+<hr/>
+
+### 🛡️ PGP Security & Permissions
+Lock down dangerous executions by binding LLM execution to OmniaChain cryptographic PGP signatures:
 
 ```python
 from omniachain import Agent, KeyPair, Permissions
 
-keys = await KeyPair.generate(agent_name="admin")
+keys = await KeyPair.generate(agent_name="sysadmin")
 perms = Permissions()
-perms.grant(keys.fingerprint, tools=["calculator"])  # Só calculator
-perms.deny(keys.fingerprint, tools=["code_exec"])    # Nunca code_exec
+
+# Only this fingerprint is authorized to use the calculator
+perms.grant(keys.fingerprint, tools=["calculator"])  
+# The agent will never run remote executions, even if it suffers a prompt injection
+perms.deny(keys.fingerprint, tools=["code_exec"])    
 
 agent = Agent(provider=..., tools=[...], keypair=keys, permissions=perms)
 ```
 
-### Custom Tool
-
-```python
-from omniachain import tool
-
-@tool(cache=True, retries=3)
-async def buscar_preco(produto: str, moeda: str = "BRL") -> float:
-    """Busca o preço de um produto."""
-    return 42.0
-
-# Schema JSON gerado automaticamente!
-print(buscar_preco.schema)
-```
-
 ---
 
-## 🏗️ Arquitetura
+## 🏗️ Framework Architecture
 
-```
+OmniaChain was written to be easy to contribute to and insanely powerful to use:
+
+```text
 omniachain/
-├── core/           # Config, Message, Response, Context, Chain, Errors
-├── providers/      # Anthropic, OpenAI, Groq, Ollama, Google
-├── loaders/        # Auto-detect: PDF, Image, Audio, Video, CSV, URL, Code
-├── tools/          # @tool decorator, calculator, HTTP, file, code, search
-├── memory/         # Buffer, Summary, Vector (pgvector), Persistent, MCP
-├── mcp/            # Server, Client, Transport (stdio/HTTP), Registry
-├── security/       # KeyPair (PGP), Permissions, Guard, Middleware
-├── agents/         # Base, ReAct, Multimodal, Planner, Supervisor
-├── pipeline/       # Sequential, Parallel, Conditional, Router
-├── orchestration/  # Session, ProviderPool, Fallback, CostOptimizer
-└── observability/  # Logger, Tracer, CostTracker, Dashboard
+├── core/           # Universal Configs, Messages, Responses, and Errors
+├── providers/      # Endpoints: Anthropic, OpenAI, Groq, Ollama, Google
+├── loaders/        # Auto-ingestion: PDF, Image, Audio, Video, CSV, URL, Code
+├── tools/          # Web Search, Browser, Calculator, HTTP Exec and @tool decorator
+├── memory/         # Buffer, Summary, Vector Context (pgvector), Persistent, MCP
+├── mcp/            # MCP Client and Server, HTTP Protocol and STDIO Transport
+├── security/       # PGP Signatures, Permission Guard, Middleware Auditing
+├── agents/         # Workflow Base: ReAct, Multimodal, Planner, Supervisor, Voice
+├── pipeline/       # Graphs: Sequential, Parallel, Conditional, Router
+├── orchestration/  # Session Management, Multi-Agent and Cost Pooling
+└── observability/  # Dynamic Logging, Active Tracing, and Dashboard
 ```
 
 ---
 
-## 🔐 Segurança
+## 📁 Essential Environment Variables
 
-O OmniaChain implementa segurança PGP completa:
+Create a `.env` file at the root or export them in the terminal. The framework will magically instantiate the keys.
 
-1. **KeyPair**: Cada agente tem par de chaves (GPG real ou HMAC fallback)
-2. **Permissions**: Grant/Deny por tool, memory e provider
-3. **Guard**: Decorator `@requires_permission` para proteger funções
-4. **Middleware**: Valida assinatura + permissão + anti-replay + auditoria
-
----
-
-## 🧠 Memória Vetorial (MCP + pgvector)
-
-```python
-from omniachain.memory.mcp_memory import MCPMemoryServer
-
-# Servidor MCP de memória vetorial
-server = MCPMemoryServer(dsn="postgresql://localhost/omniachain")
-await server.run(transport="stdio")
-
-# Qualquer agente MCP pode acessar:
-# - memory_store: armazena com embedding
-# - memory_search: busca semântica
-# - memory_delete: remove por ID
-```
-
----
-
-## 📊 Observabilidade
-
-```python
-from omniachain import CostTracker, Tracer
-
-tracker = CostTracker()
-tracker.record(response)
-
-print(f"Custo total: ${tracker.total_cost:.4f}")
-print(tracker.summary())
-```
-
----
-
-## 🧪 Testes
-
-```bash
-pip install pytest pytest-asyncio
-pytest tests/ -v
-```
-
----
-
-## 📁 Variáveis de Ambiente
-
-| Variável | Descrição |
+| Variable | Configuration |
 |----------|-----------|
-| `ANTHROPIC_API_KEY` | API key Anthropic |
-| `OPENAI_API_KEY` | API key OpenAI |
-| `GROQ_API_KEY` | API key Groq |
-| `GOOGLE_API_KEY` | API key Google |
-| `OMNIA_DEFAULT_PROVIDER` | Provider padrão |
-| `OMNIA_PGVECTOR_DSN` | DSN PostgreSQL pgvector |
-| `OMNIA_SECURITY_ENABLED` | Ativar segurança PGP |
+| `ANTHROPIC_API_KEY` | Anthropic LLM Authentication |
+| `OPENAI_API_KEY` | OpenAI LLM Authentication |
+| `GROQ_API_KEY` | Fast Groq LPU Endpoint |
+| `GOOGLE_API_KEY` | Google Gemini Authentication |
+| `OMNIA_DEFAULT_PROVIDER` | Default fallback provider in the system |
+| `OMNIA_PGVECTOR_DSN` | Connection with the PostgreSQL vector database |
+| `OMNIA_SECURITY_ENABLED` | *Boolean* to enable strict PGP request signing |
 
 ---
 
-## 📜 Licença
-
-MIT License — Use como quiser.
-
----
-
-**Feito com ❤️ para a comunidade de IA.**
+<div align="center">
+  <p><b>Made with 💜 for the global Artificial Intelligence community.</b></p>
+  <a href="LICENSE">Distributed under the MIT License. Commercial Use, Modification, and Distribution permitted.</a>
+</div>
